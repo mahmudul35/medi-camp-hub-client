@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
-import Login from "../pages/Login/Login";
+import { CryptoLogin } from "../pages/Login/Login";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/join-us",
-        element: <Login />,
+        element: <CryptoLogin />,
       },
     ],
   },
