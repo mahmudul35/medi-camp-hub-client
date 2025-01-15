@@ -8,15 +8,25 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import useContextt from "../../hooks/useContext";
 // @icons
 
 export function CryptoLogin() {
+  const { user, signIn, signInWithGoogle } = useContextt();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    signIn(email, password).then((res) => {
+      alert("Login Successful");
+    });
+  };
+  const handleGoogleSignIn = () => {
+    signInWithGoogle().then((res) => {
+      alert("Login Successful");
+    });
   };
   return (
     <div className="bg-gray-50 min-h-[calc(100vh-88px)] flex items-center justify-center">
@@ -113,18 +123,20 @@ export function CryptoLogin() {
               className="text-center"
             >
               Don't have an account?{" "}
-              <Link
-                to="signup"
+              <a
+                href="signup"
                 className="text-primary text-primary-color hover:underline font-bold"
               >
                 Sign Up
-              </Link>
+              </a>
             </Typography>
             <Button
               variant="outlined"
               size="lg"
               className="flex h-12 border-blue-gray-200 items-center justify-center gap-2"
               fullWidth
+              type="button"
+              onClick={handleGoogleSignIn}
             >
               <img
                 src={`https://www.material-tailwind.com/logos/logo-google.png`}

@@ -8,15 +8,22 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
+import useContextt from "../../hooks/useContext";
 
 // @icons
 
 export function Register() {
+  const { user, signUp } = useContextt();
+  console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    console.log({ name, email, password });
+    signUp(email, password).then((res) => {
+      console.log(res);
+    });
   };
   return (
     <div className="bg-gray-50 min-h-[calc(100vh-88px)] flex items-center justify-center">
@@ -121,7 +128,13 @@ export function Register() {
                 }}
               />
             </div>
-            <Button size="lg" color="gray" fullWidth type="submit">
+            <Button
+              size="lg"
+              color="gray"
+              fullWidth
+              type="submit"
+              className="bg-primary-color hover:text-white"
+            >
               Register
             </Button>
           </form>
