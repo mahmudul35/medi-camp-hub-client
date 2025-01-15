@@ -1,5 +1,5 @@
+import axios from "axios";
 import React from "react";
-
 // @components
 import {
   Button,
@@ -8,21 +8,35 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import useContextt from "../../hooks/useContext";
 
 // @icons
 
 export function Register() {
-  const { user, signUp } = useContextt();
+  const { user, signUp, updateUserProfile } = useContextt();
+  const navigate = useNavigate();
   console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const photo = e.target.photo.value;
     console.log({ name, email, password });
     signUp(email, password).then((res) => {
-      console.log(res);
+      updateUserProfile({
+        displayName: name,
+        photoURL: photo,
+      }).then(() => {
+        axios.post("http://localhost:3000/addUser", {
+          name,
+          email,
+          photo,
+        });
+
+        navigate("/");
+      });
     });
   };
   return (
@@ -57,6 +71,28 @@ export function Register() {
             >
               Create an account
             </Typography>
+
+            <div>
+              <label htmlFor="photo"></label>
+              <Typography
+                variant="small"
+                color="blue-gray"
+                className="block font-medium mb-2"
+              >
+                <Input
+                  id="photo"
+                  color="gray"
+                  size="lg"
+                  type="text"
+                  name="photo"
+                  placeholder="Upload Your Photo url"
+                  className="!w-full placeholder:!opacity-100 focus:!border-t-primary !border-t-blue-gray-200"
+                  labelProps={{
+                    className: "hidden",
+                  }}
+                />
+              </Typography>
+            </div>
 
             <div>
               <label htmlFor="name">
