@@ -193,10 +193,12 @@ function NavListMenu() {
 const navListItems = [
   {
     label: "Home",
+    join: "/",
     icon: HomeIcon,
   },
   {
     label: "Available Camps",
+    join: "/availableCamp",
     icon: CubeTransparentIcon,
   },
   {

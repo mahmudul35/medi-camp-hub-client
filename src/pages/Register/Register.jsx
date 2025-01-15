@@ -8,10 +8,10 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+
 // @icons
 
-export function CryptoLogin() {
+export function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -48,8 +48,32 @@ export function CryptoLogin() {
               color="blue-gray"
               className="mb-4 !text-3xl lg:text-4xl"
             >
-              Login to your account
+              Create an account
             </Typography>
+
+            <div>
+              <label htmlFor="name">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="block font-medium mb-2"
+                >
+                  Your Name
+                </Typography>
+              </label>
+              <Input
+                id="name"
+                color="gray"
+                size="lg"
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                className="!w-full placeholder:!opacity-100 focus:!border-t-primary !border-t-blue-gray-200"
+                labelProps={{
+                  className: "hidden",
+                }}
+              />
+            </div>
 
             <div>
               <label htmlFor="email">
@@ -97,41 +121,8 @@ export function CryptoLogin() {
                 }}
               />
             </div>
-            <Button
-              size="lg"
-              color="gray"
-              className="bg-primary-color hover:text-white"
-              fullWidth
-              type="submit"
-            >
-              Login
-            </Button>
-
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="text-center"
-            >
-              Don't have an account?{" "}
-              <Link
-                to="signup"
-                className="text-primary text-primary-color hover:underline font-bold"
-              >
-                Sign Up
-              </Link>
-            </Typography>
-            <Button
-              variant="outlined"
-              size="lg"
-              className="flex h-12 border-blue-gray-200 items-center justify-center gap-2"
-              fullWidth
-            >
-              <img
-                src={`https://www.material-tailwind.com/logos/logo-google.png`}
-                alt="google"
-                className="h-6 w-6"
-              />{" "}
-              sign in with google
+            <Button size="lg" color="gray" fullWidth type="submit">
+              Register
             </Button>
           </form>
         </CardBody>
@@ -140,4 +131,4 @@ export function CryptoLogin() {
   );
 }
 
-export default CryptoLogin;
+export default Register;
