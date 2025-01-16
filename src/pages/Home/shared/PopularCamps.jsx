@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 const PopularCamps = () => {
   const [camps, setCamps] = useState([]);
 
@@ -52,13 +52,13 @@ const PopularCamps = () => {
                   <strong>Healthcare Professional:</strong>{" "}
                   {camp.healthcareProfessional}
                 </p>
-                <button
-                  className="bg-pink-800 text-white py-2 px-4 rounded hover:bg-pink-700 transition-colors duration-300"
-                  onClick={() =>
-                    (window.location.href = `/camp-details/${camp._id}`)
-                  }
-                >
-                  View Details
+                <button>
+                  <Link
+                    className="bg-pink-800 text-white py-2 px-4 rounded hover:bg-pink-700 transition-colors duration-300"
+                    to={`/camp-details/${camp._id}`}
+                  >
+                    View Details
+                  </Link>
                 </button>
               </div>
             </div>
