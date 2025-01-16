@@ -1,45 +1,72 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 const DetailsCamp = () => {
   const { id } = useParams();
-  console.log(id);
-  const [camp, setCamp] = useState([]);
+  const [camp, setCamp] = useState(null);
+  const [loading, setLoading] = useState(true);
+  console.log(camp);
   useEffect(() => {
-    // Fetch the camp details from the backend
     axios
       .get(`http://localhost:3000/camp/${id}`)
-      .then((response) => setCamp(response.data))
-      .catch((error) => console.error(error));
+      .then((response) => {
+        setCamp(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-gray-500 text-xl">Loading...</p>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ color: "#333", textAlign: "center" }}>Camp Details</h1>
+    <div className="container mx-auto py-12 px-6 font-sans">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+        Camp Details
+      </h1>
       {camp ? (
-        <div
-          style={{
-            maxWidth: "600px",
-            margin: "0 auto",
-            backgroundColor: "#f9f9f9",
-            padding: "20px",
-            borderRadius: "8px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2 style={{ color: "#555" }}>{camp.name}</h2>
-          <p style={{ color: "#777" }}>{camp.description}</p>
-          <p style={{ color: "#777" }}>
-            <strong>Location:</strong> {camp.location}
-          </p>
-          <p style={{ color: "#777" }}>
-            <strong>Date:</strong> {camp.date}
-          </p>
-          <p style={{ color: "#777" }}>
-            <strong>Price:</strong> ${camp.price}
-          </p>
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="flex items-center justify-center">
+            <img
+              src={camp.image}
+              alt={camp.name}
+              className="w-full h-96 object-cover"
+            />
+          </div>
+
+          <div className="p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              {camp.name}
+            </h2>
+            <p className="text-gray-600 mb-4">{camp.description}</p>
+            <p className="text-gray-700 mb-2">
+              <span className="font-semibold">Location:</span> {camp.location}
+            </p>
+            <p className="text-gray-700 mb-2">
+              <span className="font-semibold">Date:</span> {camp.date}
+            </p>
+            <p className="text-gray-700 mb-2">
+              <span className="font-semibold">Fees:</span>{" "}
+              <span className="text-pink-800 font-bold">${camp.fees}</span>
+            </p>
+            <button className="mt-6 w-full bg-pink-800 text-white py-3 px-6 rounded hover:bg-pink-700 transition duration-300">
+              Join Camp
+            </button>
+          </div>
         </div>
       ) : (
-        <p style={{ textAlign: "center", color: "#999" }}>Loading...</p>
+        <p className="text-center text-gray-500 text-xl">
+          No camp details available.
+        </p>
       )}
     </div>
   );
