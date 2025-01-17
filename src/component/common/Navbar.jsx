@@ -40,6 +40,9 @@ function ProfileMenu() {
     {
       label: "Dashboard",
       icon: Cog6ToothIcon,
+      onClick: () => {
+        window.location.href = "/dashboard";
+      },
     },
     {
       label: "Logout",
