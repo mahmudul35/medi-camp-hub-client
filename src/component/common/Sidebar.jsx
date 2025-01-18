@@ -15,18 +15,18 @@ import { Link } from "react-router-dom";
 
 const SIDE_BAR = [
   {
-    name: "Apply",
+    name: "Add A Camp",
     icon: NotebookPen,
     color: "#6366f1",
-    href: "/",
+    href: "addCamp",
   },
   {
-    name: "Admin Dashboard",
+    name: "Organizer Profile.",
     icon: LayoutDashboard,
     color: "#8B5CF6",
     href: "/dashboard",
   },
-  { name: "Filter Trainee", icon: Users, color: "#EC4899", href: "/filter" },
+  { name: "Manage Camps", icon: Users, color: "#EC4899", href: "/manageCamp" },
   { name: "Sales", icon: DollarSign, color: "#10B981", href: "/sales" },
   { name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
   { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },

@@ -8,12 +8,15 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useContextt from "../../hooks/useContext";
 // @icons
+import { useNavigate } from "react-router-dom";
 
 export function CryptoLogin() {
   const { user, signIn, signInWithGoogle } = useContextt();
-
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -26,6 +29,15 @@ export function CryptoLogin() {
   const handleGoogleSignIn = () => {
     signInWithGoogle().then((res) => {
       alert("Login Successful");
+      const userInfo = {
+        email: res.user.email,
+        name: res.user.displayName,
+        photoURL: res.user.photoURL,
+      };
+      axiosPublic.post("/addUser", userInfo).then((res) => {
+        console.log(res);
+        navigate("/");
+      });
     });
   };
   return (
