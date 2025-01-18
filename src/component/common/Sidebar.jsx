@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // import logo from "../../assets/headerImg.png";
+const isAdmin = true;
 
 const SIDE_BAR = [
   {
@@ -26,13 +27,23 @@ const SIDE_BAR = [
     color: "#8B5CF6",
     href: "/dashboard",
   },
-  { name: "Manage Camps", icon: Users, color: "#EC4899", href: "/manageCamp" },
+  { name: "Manage Camps", icon: Users, color: "#EC4899", href: "manageCamp" },
   { name: "Sales", icon: DollarSign, color: "#10B981", href: "/sales" },
   { name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
   { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },
   { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" },
 ];
 
+const SideBarUser = [
+  {
+    name: "Available Camps",
+    icon: LayoutDashboard,
+    color: "#6366f1",
+    href: "/",
+  },
+  { name: "Join Us", icon: Users, color: "#8B5CF6", href: "/join-us" },
+  { name: "Sign Up", icon: Users, color: "#EC4899", href: "/signup" },
+];
 export default function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -64,29 +75,59 @@ export default function Sidebar() {
           />
         </div>
         <nav className="mt-8 flex-grow">
-          {SIDE_BAR.map((item) => (
-            <Link key={item.href} to={item.href}>
-              <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-zinc-300">
-                <item.icon
-                  size={20}
-                  style={{ color: item.color, minWidth: "20px" }}
-                />
-                <AnimatePresence>
-                  {isSidebarOpen && (
-                    <motion.span
-                      className="ml-4 whitespace-nowrap"
-                      initial={{ opacity: 0, width: 0 }}
-                      animate={{ opacity: 1, width: "auto" }}
-                      exit={{ opacity: 0, width: 0 }}
-                      transition={{ duration: 0.2, delay: 0.3 }}
-                    >
-                      <h1 className="text-black"> {item.name}</h1>
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            </Link>
-          ))}
+          {isAdmin ? (
+            <>
+              {SIDE_BAR.map((item) => (
+                <Link key={item.href} to={item.href}>
+                  <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-zinc-300">
+                    <item.icon
+                      size={20}
+                      style={{ color: item.color, minWidth: "20px" }}
+                    />
+                    <AnimatePresence>
+                      {isSidebarOpen && (
+                        <motion.span
+                          className="ml-4 whitespace-nowrap"
+                          initial={{ opacity: 0, width: 0 }}
+                          animate={{ opacity: 1, width: "auto" }}
+                          exit={{ opacity: 0, width: 0 }}
+                          transition={{ duration: 0.2, delay: 0.3 }}
+                        >
+                          <h1 className="text-black"> {item.name}</h1>
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </Link>
+              ))}
+            </>
+          ) : (
+            <>
+              {SideBarUser.map((item) => (
+                <Link key={item.href} to={item.href}>
+                  <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-zinc-300">
+                    <item.icon
+                      size={20}
+                      style={{ color: item.color, minWidth: "20px" }}
+                    />
+                    <AnimatePresence>
+                      {isSidebarOpen && (
+                        <motion.span
+                          className="ml-4 whitespace-nowrap"
+                          initial={{ opacity: 0, width: 0 }}
+                          animate={{ opacity: 1, width: "auto" }}
+                          exit={{ opacity: 0, width: 0 }}
+                          transition={{ duration: 0.2, delay: 0.3 }}
+                        >
+                          <h1 className="text-black"> {item.name}</h1>
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </Link>
+              ))}
+            </>
+          )}
         </nav>
       </div>
     </motion.div>

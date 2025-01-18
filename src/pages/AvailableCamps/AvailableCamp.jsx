@@ -17,17 +17,14 @@ const AvailableCamp = () => {
       <h1 className="text-4xl font-bold text-center text-pink-800 mb-12">
         Explore Our Camps
       </h1>
+      {/* {JSON.stringify(camps[12])} */}
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {camps.map((camp) => (
           <div
             key={camp._id}
             className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-transform duration-300"
           >
-            <img
-              src={camp.image}
-              alt={camp.name}
-              className="h-56 w-full object-cover"
-            />
+            <img src={camp.image} alt={camp.name} className="h-56 w-full" />
             <div className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-2 truncate">
                 {camp.name}
@@ -39,11 +36,17 @@ const AvailableCamp = () => {
                 <span className="font-semibold">Fees:</span> ${camp.fees}
               </p>
               <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Date:</span> {camp.date}
+                <span className="font-semibold">Date:</span>{" "}
+                {new Date(camp.dateTime).toLocaleDateString()}
               </p>
               <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Time:</span> {camp.time}
+                <span className="font-semibold">Time:</span>{" "}
+                {new Date(camp.dateTime).toLocaleTimeString()}
               </p>
+
+              {/* <p className="text-gray-600 mb-1">
+                <span className="font-semibold">Time:</span> {camp.time}
+              </p> */}
               <p className="text-gray-600 mb-3">
                 <span className="font-semibold">Participants:</span>{" "}
                 {camp.participantCount}
