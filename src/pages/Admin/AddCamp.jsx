@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-
+const imageHostingApi = `https://api.imgbb.com/1/upload?key=4276e99e16c8c70522c44d4e9b5eb595`;
 const AddCamp = () => {
   const {
     register,
@@ -15,14 +15,33 @@ const AddCamp = () => {
       // Include participantCount as 0
       const campData = { ...data, participantCount: 0 };
 
-      // Send data to the backend
-      const response = await axios.post(
-        "http://localhost:3000/admin/camps",
-        campData
-      );
-      if (response.status === 200) {
-        alert("Camp added successfully!");
-        // reset(); // Reset the form
+      // Prepare the image for upload
+      const formData = new FormData();
+      formData.append("image", campData.image[0]); // Append the actual file
+
+      // Upload image to imgbb
+      const imageRes = await axios.post(imageHostingApi, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (imageRes.data && imageRes.data.data && imageRes.data.data.url) {
+        // Add the uploaded image URL to the camp data
+        campData.image = imageRes.data.data.url;
+
+        // Send data to the backend
+        const response = await axios.post(
+          "http://localhost:3000/admin/camps",
+          campData
+        );
+
+        if (response.status === 200) {
+          alert("Camp added successfully!");
+          reset(); // Reset the form
+        }
+      } else {
+        throw new Error("Failed to upload image");
       }
     } catch (error) {
       console.error("Failed to add camp", error);
@@ -63,7 +82,7 @@ const AddCamp = () => {
             Image URL
           </label>
           <input
-            type="text"
+            type="file"
             {...register("image", { required: "Image URL is required" })}
             className={`w-full border ${
               errors.image ? "border-red-500" : "border-gray-300"

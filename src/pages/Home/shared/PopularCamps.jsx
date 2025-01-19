@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const PopularCamps = () => {
+  const navigate = useNavigate();
   const [camps, setCamps] = useState([]);
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const PopularCamps = () => {
         <div className="text-center mt-10">
           <button
             className="bg-pink-800 text-white py-3 px-6 rounded hover:bg-pink-700 transition-colors duration-300"
-            onClick={() => (window.location.href = "/available-camps")}
+            onClick={() => navigate("/availableCamp")}
           >
             See All Camps
           </button>

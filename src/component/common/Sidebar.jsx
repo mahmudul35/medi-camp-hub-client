@@ -11,27 +11,37 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useAdminn from "../../hooks/useAdmin";
 // import logo from "../../assets/headerImg.png";
-const isAdmin = true;
 
 const SIDE_BAR = [
   {
     name: "Add A Camp",
     icon: NotebookPen,
     color: "#6366f1",
-    href: "addCamp",
+    to: "addCamp", // Updated 'href' to 'to'
   },
   {
     name: "Organizer Profile.",
     icon: LayoutDashboard,
     color: "#8B5CF6",
-    href: "/dashboard",
+    to: "/dashboard", // Updated 'href' to 'to'
   },
-  { name: "Manage Camps", icon: Users, color: "#EC4899", href: "manageCamp" },
-  { name: "Sales", icon: DollarSign, color: "#10B981", href: "/sales" },
-  { name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
-  { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },
-  { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" },
+  { name: "Manage Camps", icon: Users, color: "#EC4899", to: "manageCamp" },
+  {
+    name: "Manage Registered",
+    icon: DollarSign,
+    color: "#10B981",
+    to: "manageRegistered",
+  },
+  {
+    name: "Manage Users",
+    icon: ShoppingCart,
+    color: "#F59E0B",
+    to: "manageUser",
+  },
+  { name: "Analytics", icon: TrendingUp, color: "#3B82F6", to: "/analytics" },
+  { name: "Settings", icon: Settings, color: "#6EE7B7", to: "/settings" },
 ];
 
 const SideBarUser = [
@@ -39,14 +49,15 @@ const SideBarUser = [
     name: "Available Camps",
     icon: LayoutDashboard,
     color: "#6366f1",
-    href: "/",
+    to: "/", // Updated 'href' to 'to'
   },
-  { name: "Join Us", icon: Users, color: "#8B5CF6", href: "/join-us" },
-  { name: "Sign Up", icon: Users, color: "#EC4899", href: "/signup" },
+  { name: "Join Us", icon: Users, color: "#8B5CF6", to: "/join-us" },
+  { name: "Sign Up", icon: Users, color: "#EC4899", to: "/signup" },
 ];
+
 export default function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+  const [isAdmin] = useAdminn();
   return (
     <motion.div
       className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
@@ -78,7 +89,7 @@ export default function Sidebar() {
           {isAdmin ? (
             <>
               {SIDE_BAR.map((item) => (
-                <Link key={item.href} to={item.href}>
+                <Link key={item.to} to={item.to}>
                   <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-zinc-300">
                     <item.icon
                       size={20}

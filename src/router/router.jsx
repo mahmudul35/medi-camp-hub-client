@@ -3,11 +3,14 @@ import Dashboard from "../layout/Dashboard";
 import MainLayout from "../layout/MainLayout";
 import AddCamp from "../pages/Admin/AddCamp";
 import ManageCamps from "../pages/Admin/ManageCamp";
+import ManageRegisteredCamps from "../pages/Admin/ManageRegisteredCamp";
+import ManageUsers from "../pages/Admin/ManageUsers";
 import AvailableCamp from "../pages/AvailableCamps/AvailableCamp";
 import Home from "../pages/Home/Home";
 import DetailsCamp from "../pages/Home/shared/DetailsCamp";
 import CryptoLogin from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import PrivateRoute from "../private/PrivateRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,15 +40,46 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "addCamp",
-        element: <AddCamp />,
+        element: (
+          <PrivateRoute>
+            <AddCamp />
+          </PrivateRoute>
+        ),
       },
       {
         path: "manageCamp",
-        element: <ManageCamps />,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ManageCamps />{" "}
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manageRegistered",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ManageRegisteredCamps />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manageUser",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ManageUsers />
+          </PrivateRoute>
+        ),
       },
     ],
   },
