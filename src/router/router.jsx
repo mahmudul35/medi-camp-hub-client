@@ -9,6 +9,7 @@ import AvailableCamp from "../pages/AvailableCamps/AvailableCamp";
 import Home from "../pages/Home/Home";
 import DetailsCamp from "../pages/Home/shared/DetailsCamp";
 import CryptoLogin from "../pages/Login/Login";
+import RegisteredCamps from "../pages/Participant/RegisteredCamp";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "../private/PrivateRoute";
 const router = createBrowserRouter([
@@ -78,6 +79,15 @@ const router = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <ManageUsers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "registerdCamp",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <RegisteredCamps />
           </PrivateRoute>
         ),
       },

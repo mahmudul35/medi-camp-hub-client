@@ -46,13 +46,29 @@ const SIDE_BAR = [
 
 const SideBarUser = [
   {
-    name: "Available Camps",
+    name: "Analytics",
     icon: LayoutDashboard,
     color: "#6366f1",
-    to: "/", // Updated 'href' to 'to'
+    to: "/analytics", // Updated 'href' to 'to'
   },
-  { name: "Join Us", icon: Users, color: "#8B5CF6", to: "/join-us" },
-  { name: "Sign Up", icon: Users, color: "#EC4899", to: "/signup" },
+  {
+    name: "Participant Profile",
+    icon: Users,
+    color: "#8B5CF6",
+    to: "/profile",
+  },
+  {
+    name: "Registered Camps",
+    icon: Users,
+    color: "#EC4899",
+    to: "registerdCamp",
+  },
+  {
+    name: "Payment History",
+    icon: DollarSign,
+    color: "#10B981",
+    to: "/paymentHistory",
+  },
 ];
 
 export default function Sidebar() {
@@ -115,7 +131,7 @@ export default function Sidebar() {
           ) : (
             <>
               {SideBarUser.map((item) => (
-                <Link key={item.href} to={item.href}>
+                <Link key={item.to} to={item.to}>
                   <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-zinc-300">
                     <item.icon
                       size={20}
