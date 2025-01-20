@@ -100,6 +100,7 @@ export default function Sidebar() {
                 : "transition-all duration-300 ease-in-out hidden"
             } w-32`}
           />
+          <Link to="/">MedicampHub</Link>
         </div>
         <nav className="mt-8 flex-grow">
           {isAdmin ? (

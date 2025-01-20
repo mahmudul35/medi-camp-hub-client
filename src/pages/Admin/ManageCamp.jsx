@@ -37,7 +37,7 @@ const ManageCamps = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
+    console.log(editingCamp);
     try {
       await axios.put(
         `http://localhost:3000/update-camp/${editingCamp._id}`,
