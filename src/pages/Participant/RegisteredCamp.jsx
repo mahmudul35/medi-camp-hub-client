@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useContextt from "../../hooks/useContext";
 const RegisteredCamps = ({ participantId }) => {
+  const navigate = useNavigate();
   const [camps, setCamps] = useState([]);
   const { user } = useContextt();
   useEffect(() => {
@@ -20,20 +22,9 @@ const RegisteredCamps = ({ participantId }) => {
     }
   };
 
-  const handlePay = async (participantId) => {
-    try {
-      const transactionId = `txn_${Date.now()}`; // Simulate transaction ID
-      await axios.post(`http://localhost:3000/payCamp/${participantId}`, {
-        transactionId,
-        paymentStatus: "Paid",
-      });
-      alert(`Payment successful! Transaction ID: ${transactionId}`);
-      fetchCamps();
-    } catch (error) {
-      console.error("Error processing payment:", error);
-      alert("Failed to process payment.");
-    }
-  };
+  //   const handlePay = async () => {
+  //     navigate("/payment");
+  //   };
 
   const handleCancel = async (participantId, paymentStatus) => {
     if (paymentStatus === "Paid") {
@@ -104,12 +95,12 @@ const RegisteredCamps = ({ participantId }) => {
                 </td>
                 <td className="px-4 py-2 space-x-2">
                   {camp.paymentStatus !== "Paid" && (
-                    <button
+                    <Link
                       className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
-                      onClick={() => handlePay(camp._id)}
+                      to="/dashboard/payment"
                     >
                       Pay
-                    </button>
+                    </Link>
                   )}
                   {camp.paymentStatus !== "Paid" && (
                     <button

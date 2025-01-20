@@ -25,7 +25,7 @@ const SIDE_BAR = [
     name: "Organizer Profile.",
     icon: LayoutDashboard,
     color: "#8B5CF6",
-    to: "/dashboard", // Updated 'href' to 'to'
+    to: "profile", // Updated 'href' to 'to'
   },
   { name: "Manage Camps", icon: Users, color: "#EC4899", to: "manageCamp" },
   {
@@ -55,7 +55,7 @@ const SideBarUser = [
     name: "Participant Profile",
     icon: Users,
     color: "#8B5CF6",
-    to: "/profile",
+    to: "profile",
   },
   {
     name: "Registered Camps",
@@ -67,7 +67,7 @@ const SideBarUser = [
     name: "Payment History",
     icon: DollarSign,
     color: "#10B981",
-    to: "/paymentHistory",
+    to: "paymentHistory",
   },
 ];
 

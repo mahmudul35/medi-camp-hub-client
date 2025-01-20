@@ -9,7 +9,9 @@ import AvailableCamp from "../pages/AvailableCamps/AvailableCamp";
 import Home from "../pages/Home/Home";
 import DetailsCamp from "../pages/Home/shared/DetailsCamp";
 import CryptoLogin from "../pages/Login/Login";
+import ParticipantProfile from "../pages/Participant/Profile";
 import RegisteredCamps from "../pages/Participant/RegisteredCamp";
+import Payment from "../pages/payment/Payment";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "../private/PrivateRoute";
 const router = createBrowserRouter([
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
         element: <DetailsCamp />,
       },
     ],
+  },
+  {
+    path: "dashboard/payment",
+    element: <Payment />,
   },
   {
     path: "/dashboard",
@@ -90,6 +96,10 @@ const router = createBrowserRouter([
             <RegisteredCamps />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "profile",
+        element: <ParticipantProfile />,
       },
     ],
   },
