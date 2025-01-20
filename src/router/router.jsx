@@ -9,6 +9,7 @@ import AvailableCamp from "../pages/AvailableCamps/AvailableCamp";
 import Home from "../pages/Home/Home";
 import DetailsCamp from "../pages/Home/shared/DetailsCamp";
 import CryptoLogin from "../pages/Login/Login";
+import Analytics from "../pages/Participant/Analytics";
 import ParticipantProfile from "../pages/Participant/Profile";
 import RegisteredCamps from "../pages/Participant/RegisteredCamp";
 import Payment from "../pages/payment/Payment";
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <ParticipantProfile />,
+      },
+      {
+        path: "analytics",
+        element: <Analytics />,
       },
     ],
   },

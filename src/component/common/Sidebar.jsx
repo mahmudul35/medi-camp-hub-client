@@ -49,7 +49,7 @@ const SideBarUser = [
     name: "Analytics",
     icon: LayoutDashboard,
     color: "#6366f1",
-    to: "/analytics", // Updated 'href' to 'to'
+    to: "analytics", // Updated 'href' to 'to'
   },
   {
     name: "Participant Profile",
