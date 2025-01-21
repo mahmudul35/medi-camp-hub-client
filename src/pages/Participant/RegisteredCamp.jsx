@@ -14,7 +14,7 @@ const stripePromise = loadStripe(
   "pk_test_51Qj6TYR5A2VhwpSvMcd7oAYjQsyXv6pVD7mUJhdRjTXiRqMmUP7ipoKnfzAIrXiMxyIga84jqGw77Uf6bih0CcbV00iwed8jSS"
 );
 
-const CheckoutForm = ({ amount, onClose }) => {
+const CheckoutForm = ({ amount, onClose, campName }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -81,8 +81,20 @@ const CheckoutForm = ({ amount, onClose }) => {
       }
       if (paymentIntent.status === "succeeded") {
         setSuccess(true);
-        console.log(paymentIntent.id);
+        // console.log(paymentIntent.id);
         setTransactionId(paymentIntent.id);
+
+        const paymentInfo = {
+          campName: campName,
+          participantId: user.email,
+          transactionId: paymentIntent.id,
+          fees: amount,
+          date: new Date(),
+          paymentStatus: "Pending",
+        };
+
+        const res = await axiosSecure.post("/payment", paymentInfo);
+        console.log(res);
       } else {
         setError("Payment failed");
       }
@@ -110,7 +122,7 @@ const CheckoutForm = ({ amount, onClose }) => {
         {processing ? "Processing..." : `Pay $${amount}`}
       </button>
       {error && <div className="text-red-500">{error}</div>}
-      {transactionId && ( // Show transaction ID if payment is successful
+      {transactionId && (
         <div className="text-green-500">
           Your Transaction ID: {transactionId}
         </div>
@@ -229,6 +241,7 @@ const RegisteredCamps = ({ participantId }) => {
             <Elements stripe={stripePromise}>
               <CheckoutForm
                 amount={selectedCamp.campFees}
+                campName={selectedCamp.campName}
                 onClose={() => setIsModalOpen(false)}
               />
             </Elements>
