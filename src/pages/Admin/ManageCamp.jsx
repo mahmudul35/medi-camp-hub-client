@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 
 const ManageCamps = () => {
   const [camps, setCamps] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage] = useState(10); // Rows per page is fixed at 10
   const [editingCamp, setEditingCamp] = useState(null);
 
   useEffect(() => {
@@ -37,13 +39,11 @@ const ManageCamps = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log(editingCamp._id);
     try {
       await axios.put(
         `http://localhost:3000/update-camp/${editingCamp._id}`,
         editingCamp
       );
-      console.log(editingCamp);
       alert("Camp updated successfully!");
       setEditingCamp(null);
       fetchCamps();
@@ -52,6 +52,16 @@ const ManageCamps = () => {
       alert("Error updating camp.");
     }
   };
+
+  // Calculate the data for the current page
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentCamps = camps.slice(indexOfFirstRow, indexOfLastRow);
+
+  // Handle page change
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const totalPages = Math.ceil(camps.length / rowsPerPage);
 
   return (
     <div className="container mx-auto py-12 px-6">
@@ -70,7 +80,7 @@ const ManageCamps = () => {
             </tr>
           </thead>
           <tbody>
-            {camps.map((camp) => (
+            {currentCamps.map((camp) => (
               <tr key={camp._id} className="border-b">
                 <td className="px-4 py-2">{camp.name}</td>
                 <td className="px-4 py-2">
@@ -96,6 +106,37 @@ const ManageCamps = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center items-center mt-6 space-x-2">
+        <button
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`px-4 py-2 ${
+              currentPage === index + 1
+                ? "bg-pink-800 text-white"
+                : "bg-gray-300 text-gray-700"
+            } rounded hover:bg-pink-700 transition`}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
       </div>
 
       {/* Edit Modal */}
