@@ -14,6 +14,7 @@ import ParticipantProfile from "../pages/Participant/Profile";
 import RegisteredCamps from "../pages/Participant/RegisteredCamp";
 import Payment from "../pages/payment/Payment";
 import Register from "../pages/Register/Register";
+import AdminRoute from "../private/AdminRoute";
 import PrivateRoute from "../private/PrivateRoute";
 const router = createBrowserRouter([
   {
@@ -57,9 +58,9 @@ const router = createBrowserRouter([
       {
         path: "addCamp",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             <AddCamp />
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
