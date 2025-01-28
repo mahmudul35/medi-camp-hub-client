@@ -12,8 +12,8 @@
 
 ## 👤 Organizer Login Credentials
 
-<!-- - **Username:** organizer@example.com   -->
-<!-- - **Password:** organizer123 -->
+- **Username:** admin@gmail.com -->
+- **Password:** abcdef35@
 
 ---
 
