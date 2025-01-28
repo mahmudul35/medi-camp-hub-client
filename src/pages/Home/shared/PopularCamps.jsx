@@ -41,11 +41,13 @@ const PopularCamps = () => {
                   <strong>Fees:</strong> ${camp.fees}
                 </p>
                 <p className="text-gray-600 mb-1">
-                  <strong>Date:</strong> {camp.date}
+                  <strong>Date and Time:</strong>{" "}
+                  {new Date(camp.dateTime).toLocaleDateString()}{" "}
+                  {new Date(camp.dateTime).toLocaleTimeString()}
                 </p>
-                <p className="text-gray-600 mb-1">
+                {/* <p className="text-gray-600 mb-1">
                   <strong>Time:</strong> {camp.time}
-                </p>
+                </p> */}
                 <p className="text-gray-600 mb-3">
                   <strong>Participants:</strong> {camp.participantCount}
                 </p>

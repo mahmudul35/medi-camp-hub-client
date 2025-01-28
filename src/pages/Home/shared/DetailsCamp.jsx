@@ -96,7 +96,9 @@ const DetailsCamp = () => {
               <span className="font-semibold">Location:</span> {camp.location}
             </p>
             <p className="text-gray-700 mb-2">
-              <span className="font-semibold">Date:</span> {camp.date}
+              <span className="font-semibold">Date and Time:</span>{" "}
+              {new Date(camp.dateTime).toLocaleDateString()}{" "}
+              {new Date(camp.dateTime).toLocaleTimeString()}
             </p>
             <p className="text-gray-700 mb-2">
               <span className="font-semibold">Fees:</span>{" "}

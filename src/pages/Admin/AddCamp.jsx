@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=4276e99e16c8c70522c44d4e9b5eb595`;
 const AddCamp = () => {
   const {
@@ -37,8 +38,13 @@ const AddCamp = () => {
         );
 
         if (response.status === 200) {
-          alert("Camp added successfully!");
-          reset(); // Reset the form
+          Swal.fire({
+            icon: "success",
+            title: "Camp added successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          // reset(); // Reset the form
         }
       } else {
         throw new Error("Failed to upload image");

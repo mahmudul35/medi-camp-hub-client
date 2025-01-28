@@ -12,6 +12,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useContextt from "../../hooks/useContext";
 // @icons
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function CryptoLogin() {
   const { user, signIn, signInWithGoogle } = useContextt();
@@ -23,12 +24,23 @@ export function CryptoLogin() {
     const password = e.target.password.value;
 
     signIn(email, password).then((res) => {
-      alert("Login Successful");
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/");
     });
   };
   const handleGoogleSignIn = () => {
     signInWithGoogle().then((res) => {
-      alert("Login Successful");
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       const userInfo = {
         email: res.user.email,
         name: res.user.displayName,

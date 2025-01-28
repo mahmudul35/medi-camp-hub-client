@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Calendar, DollarSign, MapPin, UserCheck, Users } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,6 @@ const AvailableCamp = () => {
   const [isTwoColumnLayout, setIsTwoColumnLayout] = useState(false);
 
   useEffect(() => {
-    // Fetch camps from the backend
     axios
       .get("https://medi-camp-hub-sever.vercel.app/availableCamps")
       .then((response) => {
@@ -19,7 +19,6 @@ const AvailableCamp = () => {
       });
   }, []);
 
-  // Handle search
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
@@ -30,7 +29,6 @@ const AvailableCamp = () => {
     setFilteredCamps(filtered);
   };
 
-  // Handle sorting
   const handleSort = (criteria) => {
     setSortBy(criteria);
 
@@ -45,7 +43,6 @@ const AvailableCamp = () => {
     setFilteredCamps(sortedCamps);
   };
 
-  // Toggle layout
   const toggleLayout = () => {
     setIsTwoColumnLayout(!isTwoColumnLayout);
   };
@@ -58,7 +55,6 @@ const AvailableCamp = () => {
 
       {/* Controls */}
       <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
-        {/* Search Bar */}
         <input
           type="text"
           placeholder="Search camps..."
@@ -66,8 +62,6 @@ const AvailableCamp = () => {
           onChange={handleSearch}
           className="flex-grow border border-gray-300 rounded-lg px-4 py-3 shadow focus:ring focus:ring-pink-300"
         />
-
-        {/* Sort Dropdown */}
         <select
           value={sortBy}
           onChange={(e) => handleSort(e.target.value)}
@@ -78,8 +72,6 @@ const AvailableCamp = () => {
           <option value="campFees">Camp Fees</option>
           <option value="alphabetical">Alphabetical Order</option>
         </select>
-
-        {/* Layout Toggle */}
         <button
           onClick={toggleLayout}
           className="bg-pink-800 text-white px-6 py-3 rounded-lg shadow hover:bg-pink-700 transition duration-300"
@@ -110,28 +102,27 @@ const AvailableCamp = () => {
               <h3 className="text-xl font-semibold text-gray-800 mb-2 truncate">
                 {camp.name}
               </h3>
-              <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Location:</span> {camp.location}
-              </p>
-              <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Fees:</span> ${camp.fees}
-              </p>
-              <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Date:</span>{" "}
-                {new Date(camp.dateTime).toLocaleDateString()}
-              </p>
-              <p className="text-gray-600 mb-1">
-                <span className="font-semibold">Time:</span>{" "}
+              <div className="flex items-center text-gray-600 mb-1">
+                <MapPin className="w-5 h-5 text-pink-800 mr-2" />
+                {camp.location}
+              </div>
+              <div className="flex items-center text-gray-600 mb-1">
+                <DollarSign className="w-5 h-5 text-pink-800 mr-2" />$
+                {camp.fees}
+              </div>
+              <div className="flex items-center text-gray-600 mb-1">
+                <Calendar className="w-5 h-5 text-pink-800 mr-2" />
+                {new Date(camp.dateTime).toLocaleDateString()}{" "}
                 {new Date(camp.dateTime).toLocaleTimeString()}
-              </p>
-              <p className="text-gray-600 mb-3">
-                <span className="font-semibold">Participants:</span>{" "}
-                {camp.participantCount}
-              </p>
-              <p className="text-gray-600 mb-3">
-                <span className="font-semibold">Healthcare Professional:</span>{" "}
+              </div>
+              <div className="flex items-center text-gray-600 mb-1">
+                <Users className="w-5 h-5 text-pink-800 mr-2" />
+                {camp.participantCount} participants
+              </div>
+              <div className="flex items-center text-gray-600 mb-3">
+                <UserCheck className="w-5 h-5 text-pink-800 mr-2" />
                 {camp.healthcareProfessional}
-              </p>
+              </div>
               <Link
                 className="block bg-pink-800 text-white font-medium py-2 px-4 rounded-lg text-center hover:bg-pink-700 transition duration-300"
                 to={`/camp-details/${camp._id}`}

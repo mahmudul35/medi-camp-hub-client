@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import Swal from "sweetalert2";
 const ManageCamps = () => {
   const [camps, setCamps] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,18 +20,41 @@ const ManageCamps = () => {
     } catch (error) {}
   };
 
+  // const handleDelete = async (campId) => {
+  //   if (window.confirm("Are you sure you want to delete this camp?")) {
+  //     try {
+  //       await axios.delete(
+  //         `https://medi-camp-hub-sever.vercel.app/delete-camp/${campId}`
+  //       );
+  //       alert("Camp deleted successfully!");
+  //       fetchCamps();
+  //     } catch (error) {
+  //       alert("Error deleting camp.");
+  //     }
+  //   }
+  // };
   const handleDelete = async (campId) => {
-    if (window.confirm("Are you sure you want to delete this camp?")) {
-      try {
-        await axios.delete(
-          `https://medi-camp-hub-sever.vercel.app/delete-camp/${campId}`
-        );
-        alert("Camp deleted successfully!");
-        fetchCamps();
-      } catch (error) {
-        alert("Error deleting camp.");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(
+            `https://medi-camp-hub-sever.vercel.app/delete-camp/${campId}`
+          );
+          Swal.fire("Deleted!", "The camp has been deleted.", "success");
+          fetchCamps();
+        } catch (error) {
+          Swal.fire("Error!", "There was an error deleting the camp.", "error");
+        }
       }
-    }
+    });
   };
 
   const handleEdit = (camp) => {
@@ -45,11 +68,16 @@ const ManageCamps = () => {
         `https://medi-camp-hub-sever.vercel.app/update-camp/${editingCamp._id}`,
         editingCamp
       );
-      alert("Camp updated successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Camp updated successfully!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       setEditingCamp(null);
       fetchCamps();
     } catch (error) {
-      alert("Error updating camp.");
+      // alert("Error updating camp.");
     }
   };
 

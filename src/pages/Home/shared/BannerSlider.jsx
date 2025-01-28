@@ -18,7 +18,7 @@ const successStories = [
       "Improved the lives of 300 children with vaccinations and health education.",
   },
   {
-    image: "https://via.placeholder.com/800x400",
+    image: "https://i.ibb.co.com/fqp5nC0/CMG-English.jpg",
     title: "Emergency Response Program",
     description:
       "Provided immediate care to disaster-affected regions, saving countless lives.",
@@ -38,23 +38,28 @@ const BannerSlider = () => {
   };
 
   return (
-    <div className="container mx-auto my-8">
+    <div className="container mx-auto my-12">
       <Slider {...settings}>
         {successStories.map((story, index) => (
           <div
             key={index}
-            className="relative overflow-hidden rounded-lg shadow-lg"
+            className="relative overflow-hidden rounded-lg shadow-xl transition-transform duration-300 hover:scale-105"
           >
             <img
               src={story.image}
               alt={story.title}
-              className="w-full h-64 object-cover"
+              className="w-full h-[600px] object-cover rounded-lg"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center p-4">
-              <h2 className="text-2xl font-bold text-white mb-2">
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end items-center text-center p-8">
+              <h2 className="text-3xl font-extrabold text-pink-800 mb-4 drop-shadow-lg">
                 {story.title}
               </h2>
-              <p className="text-white text-sm">{story.description}</p>
+              <p className="text-white text-lg font-medium mb-4">
+                {story.description}
+              </p>
+              <button className="px-6 py-2 bg-pink-800 text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition">
+                Learn More
+              </button>
             </div>
           </div>
         ))}

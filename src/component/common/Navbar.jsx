@@ -24,6 +24,7 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../assets/lago.png";
 import useContextt from "../../hooks/useContext";
 
 // profile menu component
@@ -210,10 +211,14 @@ const navListItems = [
 ];
 
 function NavList() {
+  const { user } = useContextt();
+  const filteredNavListItems = navListItems.filter(
+    (item) => !(user && item.label === "Join US")
+  );
   return (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       <NavListMenu />
-      {navListItems.map(({ label, icon, join }, key) => (
+      {filteredNavListItems.map(({ label, icon, join }, key) => (
         <Link
           key={label}
           as="a"
@@ -254,11 +259,7 @@ export function ComplexNavbar() {
             className="mr-4 ml-2 cursor-pointer py-1.5 font-bold text-lg"
           >
             Medicamp Hub
-            <img
-              src="/path/to/logo.png"
-              alt="Logo"
-              className="h-8 w-8 inline-block"
-            />
+            <img src={logo} alt="Logo" className="h-9 w-9 inline-block" />
           </Typography>
         </div>
         <div className="hidden lg:block mx-auto">
