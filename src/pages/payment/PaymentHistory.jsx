@@ -24,30 +24,36 @@ const PaymentHistory = () => {
   //   });
   return (
     <div className="container mx-auto p-4">
-      <h1>Total user payment :{payments.length}</h1>
+      <h1 className="text-4xl font-bold text-center text-pink-800 mb-12">
+        Your Payment History{" "}
+      </h1>
 
       <table
         style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}
       >
-        <thead>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-              Camp Name
-            </th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Fees</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-              {" "}
-              Transaction ID{" "}
-            </th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-              Payment Status
-            </th>
-            {/* <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+        {payments.length > 0 ? (
+          <thead>
+            <tr style={{ backgroundColor: "#f2f2f2" }}>
+              <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Camp Name
+              </th>
+              <th style={{ border: "1px solid #ddd", padding: "8px" }}>Fees</th>
+              <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                {" "}
+                Transaction ID{" "}
+              </th>
+              <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Payment Status
+              </th>
+              {/* <th style={{ border: "1px solid #ddd", padding: "8px" }}>
               Confirmation Status
             </th> */}
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Date</th>
-          </tr>
-        </thead>
+              <th style={{ border: "1px solid #ddd", padding: "8px" }}>Date</th>
+            </tr>
+          </thead>
+        ) : (
+          <h1>No payment history</h1>
+        )}
         <tbody>
           {payments.map((payment, index) => (
             <tr

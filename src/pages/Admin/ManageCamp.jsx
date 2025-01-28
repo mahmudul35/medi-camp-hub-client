@@ -168,7 +168,7 @@ const ManageCamps = () => {
       </div>
 
       {/* Edit Modal */}
-      {editingCamp && (
+      {/* {editingCamp && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
           <form
             onSubmit={handleUpdate}
@@ -219,6 +219,137 @@ const ManageCamps = () => {
             >
               Save Changes
             </button>
+            <button
+              onClick={() => setEditingCamp(null)}
+              className="w-full mt-2 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      )} */}
+
+      {/* Edit Modal */}
+      {editingCamp && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+          <form
+            onSubmit={handleUpdate}
+            className="bg-white rounded-lg shadow-lg p-6 w-96"
+          >
+            <h2 className="text-2xl font-bold mb-4">Edit Camp</h2>
+
+            {/* Camp Name */}
+            <label className="block text-gray-700 font-medium mb-1">
+              Camp Name
+            </label>
+            <input
+              type="text"
+              value={editingCamp.name}
+              onChange={(e) =>
+                setEditingCamp({ ...editingCamp, name: e.target.value })
+              }
+              placeholder="Camp Name"
+              className="w-full border rounded mb-3 p-2"
+            />
+
+            {/* Image URL */}
+            <label className="block text-gray-700 font-medium mb-1">
+              Image URL
+            </label>
+            <input
+              type="text"
+              value={editingCamp.image}
+              onChange={(e) =>
+                setEditingCamp({ ...editingCamp, image: e.target.value })
+              }
+              placeholder="Image URL"
+              className="w-full border rounded mb-3 p-2"
+            />
+
+            {/* Date & Time */}
+            <label className="block text-gray-700 font-medium mb-1">
+              Date & Time
+            </label>
+            <input
+              type="datetime-local"
+              value={editingCamp.dateTime}
+              onChange={(e) =>
+                setEditingCamp({ ...editingCamp, dateTime: e.target.value })
+              }
+              className="w-full border rounded mb-3 p-2"
+            />
+
+            {/* Location */}
+            <label className="block text-gray-700 font-medium mb-1">
+              Location
+            </label>
+            <input
+              type="text"
+              value={editingCamp.location}
+              onChange={(e) =>
+                setEditingCamp({ ...editingCamp, location: e.target.value })
+              }
+              placeholder="Location"
+              className="w-full border rounded mb-3 p-2"
+            />
+
+            {/* Healthcare Professional */}
+            <label className="block text-gray-700 font-medium mb-1">
+              Healthcare Professional
+            </label>
+            <input
+              type="text"
+              value={editingCamp.healthcareProfessional}
+              onChange={(e) =>
+                setEditingCamp({
+                  ...editingCamp,
+                  healthcareProfessional: e.target.value,
+                })
+              }
+              placeholder="Healthcare Professional"
+              className="w-full border rounded mb-3 p-2"
+            />
+
+            {/* Participant Count */}
+            <label className="block text-gray-700 font-medium mb-1">
+              Participant Count
+            </label>
+            <input
+              type="number"
+              value={editingCamp.participantCount || 0}
+              onChange={(e) =>
+                setEditingCamp({
+                  ...editingCamp,
+                  participantCount: parseInt(e.target.value),
+                })
+              }
+              placeholder="Participant Count"
+              className="w-full border rounded mb-3 p-2"
+            />
+
+            {/* Description */}
+            <label className="block text-gray-700 font-medium mb-1">
+              Description
+            </label>
+            <textarea
+              value={editingCamp.description || ""}
+              onChange={(e) =>
+                setEditingCamp({ ...editingCamp, description: e.target.value })
+              }
+              placeholder="Description"
+              className="w-full border rounded mb-3 p-2"
+              rows="3"
+            ></textarea>
+
+            {/* Save Changes Button */}
+            <button
+              type="submit"
+              className="w-full bg-pink-800 text-white py-2 px-4 rounded hover:bg-pink-700"
+            >
+              Save Changes
+            </button>
+
+            {/* Cancel Button */}
             <button
               onClick={() => setEditingCamp(null)}
               className="w-full mt-2 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"

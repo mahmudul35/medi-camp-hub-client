@@ -360,15 +360,19 @@ const RegisteredCamps = ({ participantId }) => {
         </table> */}
         {/* Table */}
         <table className="table-auto w-full bg-white shadow-lg rounded-lg">
-          <thead className="bg-pink-800 text-white">
-            <tr>
-              <th className="px-4 py-2">Camp Name</th>
-              <th className="px-4 py-2">Fees</th>
-              <th className="px-4 py-2">Participant Name</th>
-              <th className="px-4 py-2">Payment Status</th>
-              <th className="px-4 py-2">Actions</th>
-            </tr>
-          </thead>
+          {camps.length > 0 ? (
+            <thead className="bg-pink-800 text-white">
+              <tr>
+                <th className="px-4 py-2">Camp Name</th>
+                <th className="px-4 py-2">Fees</th>
+                <th className="px-4 py-2">Participant Name</th>
+                <th className="px-4 py-2">Payment Status</th>
+                <th className="px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+          ) : (
+            <h1>No registered camp available</h1>
+          )}
           <tbody>
             {camps.map((camp) => (
               <tr key={camp._id} className="border-b hover:bg-gray-50">
