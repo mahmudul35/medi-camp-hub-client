@@ -240,7 +240,7 @@ const RegisteredCamps = ({ participantId }) => {
   const fetchCamps = async () => {
     try {
       const response = await axios.get(
-        `https://medi-camp-hub-sever.vercel.app/registeredParticipants/${user.email}`
+        `http://localhost:3000/registeredParticipants/${user.email}`
       );
       setCamps(response.data);
     } catch (error) {
@@ -295,7 +295,7 @@ const RegisteredCamps = ({ participantId }) => {
       if (result.isConfirmed) {
         try {
           await axios.delete(
-            `https://medi-camp-hub-sever.vercel.app/cancelRegistration/${participantId}`
+            `http://localhost:3000/cancelRegistration/${participantId}`
           );
           Swal.fire(
             "Canceled!",

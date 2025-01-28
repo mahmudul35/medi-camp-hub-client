@@ -24,6 +24,7 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import logo from "../../assets/lago.png";
 import useContextt from "../../hooks/useContext";
 
@@ -49,9 +50,25 @@ function ProfileMenu() {
       label: "Logout",
       icon: PowerIcon,
       onClick: () => {
-        if (window.confirm("Are you sure you want to log out?")) {
-          signOutUser();
-        }
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You are about to log out.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Yes, log out",
+          cancelButtonText: "Cancel",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            signOutUser();
+            Swal.fire(
+              "Logged Out!",
+              "You have successfully logged out.",
+              "success"
+            );
+          }
+        });
       },
     },
   ];

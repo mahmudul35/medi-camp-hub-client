@@ -4,9 +4,7 @@ import {
   LayoutDashboard,
   Menu,
   NotebookPen,
-  Settings,
   ShoppingCart,
-  TrendingUp,
   Users,
 } from "lucide-react";
 import { useState } from "react";
@@ -41,8 +39,8 @@ const SIDE_BAR = [
     color: "#F59E0B",
     to: "manageUser",
   },
-  { name: "Analytics", icon: TrendingUp, color: "#3B82F6", to: "/analytics" },
-  { name: "Settings", icon: Settings, color: "#6EE7B7", to: "/settings" },
+  // { name: "Analytics", icon: TrendingUp, color: "#3B82F6", to: "/analytics" },
+  // { name: "Settings", icon: Settings, color: "#6EE7B7", to: "/settings" },
 ];
 
 const SideBarUser = [

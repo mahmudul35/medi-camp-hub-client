@@ -44,7 +44,7 @@ const AddCamp = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          // reset(); // Reset the form
+          reset(); // Reset the form
         }
       } else {
         throw new Error("Failed to upload image");

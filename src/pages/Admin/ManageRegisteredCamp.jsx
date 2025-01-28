@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import useContextt from "../../hooks/useContext";
 const ManageRegisteredCamps = () => {
   const [participants, setParticipants] = useState([]);
+  const { user } = useContextt();
 
   useEffect(() => {
     fetchParticipants();
@@ -11,15 +12,16 @@ const ManageRegisteredCamps = () => {
   const fetchParticipants = async () => {
     try {
       const response = await axios.get(
-        "https://medi-camp-hub-sever.vercel.app/registeredParticipants"
+        `https://medi-camp-hub-sever.vercel.app/registeredParticipants`
       );
       setParticipants(response.data);
     } catch (error) {}
   };
 
   const handleConfirmPayment = async (participantId) => {
+    console.log(participantId);
     try {
-      await axios.put(
+      await axios.patch(
         `https://medi-camp-hub-sever.vercel.app/confirmPayment/${participantId}`
       );
       alert("Payment confirmed successfully!");
