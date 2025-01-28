@@ -2,6 +2,7 @@ import React from "react";
 import BannerSlider from "./shared/BannerSlider";
 import FeedbackSection from "./shared/FeedBack";
 import PopularCamps from "./shared/PopularCamps";
+import VisionImpactSection from "./shared/VisionImpactSection ";
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
       <BannerSlider />
       <PopularCamps />
       <FeedbackSection />
+      <VisionImpactSection />
     </div>
   );
 };

@@ -14,6 +14,7 @@ import Analytics from "../pages/Participant/Analytics";
 import ParticipantProfile from "../pages/Participant/Profile";
 import RegisteredCamps from "../pages/Participant/RegisteredCamp";
 import Payment from "../pages/payment/Payment";
+import PaymentHistory from "../pages/payment/PaymentHistory";
 import Register from "../pages/Register/Register";
 import AdminRoute from "../private/AdminRoute";
 import PrivateRoute from "../private/PrivateRoute";
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
             <RegisteredCamps />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory />,
       },
       {
         path: "profile",
