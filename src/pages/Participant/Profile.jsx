@@ -61,7 +61,7 @@ const ParticipantProfile = ({ participantId }) => {
   return (
     <div className="container mx-auto py-12 px-6">
       <h1 className="text-4xl font-bold text-center text-pink-800 mb-12">
-        Participant Profile
+        Profile
       </h1>
       {/* {JSON.stringify(participant)} */}
       <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">

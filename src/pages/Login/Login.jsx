@@ -41,6 +41,7 @@ export function CryptoLogin() {
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate("/");
       const userInfo = {
         email: res.user.email,
         name: res.user.displayName,
