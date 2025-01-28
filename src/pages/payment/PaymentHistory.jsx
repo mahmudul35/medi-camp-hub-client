@@ -12,7 +12,7 @@ const PaymentHistory = () => {
     });
   }, [user?.email]);
 
-  //   axios.get(`http://localhost:3000/payments/${user?.email}`).then((res) => {
+  //   axios.get(`https://medi-camp-hub-sever.vercel.app/payments/${user?.email}`).then((res) => {
   //     console.log(res.data);
   //   });
   //   const { data: payments } = useQuery({

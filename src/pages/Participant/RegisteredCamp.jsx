@@ -14,6 +14,83 @@ const stripePromise = loadStripe(
   "pk_test_51Qj6TYR5A2VhwpSvMcd7oAYjQsyXv6pVD7mUJhdRjTXiRqMmUP7ipoKnfzAIrXiMxyIga84jqGw77Uf6bih0CcbV00iwed8jSS"
 );
 
+const FeedbackModal = ({ camp, onClose, onFeedbackSubmitted }) => {
+  const [feedbackText, setFeedback] = useState("");
+  const [rating, setRating] = useState("");
+  console.log(camp);
+  const handleFeedbackSubmit = async (event) => {
+    event.preventDefault();
+
+    const feedbackData = {
+      campId: camp._id,
+      campName: camp.campName,
+      participantEmail: camp.participantEmail,
+      feedbackText,
+      rating,
+      // date: new Date(),
+    };
+
+    try {
+      const response = await axios.post(
+        "https://medi-camp-hub-sever.vercel.app/submitFeedback",
+        feedbackData
+      );
+      alert("Feedback submitted successfully!");
+      onFeedbackSubmitted();
+      onClose();
+    } catch (error) {
+      alert("Failed to submit feedback.");
+      console.error("Error submitting feedback:", error);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-4">
+          Feedback for {camp.campName}
+        </h2>
+        {/* <p className="text-gray-600 mb-4">
+          <strong>Date:</strong> {new Date(camp.dateTime).toLocaleDateString()}
+        </p> */}
+        <form onSubmit={handleFeedbackSubmit}>
+          <textarea
+            className="w-full border rounded p-2 mb-3"
+            rows="4"
+            placeholder="Write your feedback..."
+            value={feedbackText}
+            onChange={(e) => setFeedback(e.target.value)}
+            required
+          ></textarea>
+          <input
+            type="number"
+            className="w-full border rounded p-2 mb-3"
+            placeholder="Rate out of 5"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            min="1"
+            max="5"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-pink-800 text-white py-2 px-4 rounded hover:bg-pink-700"
+          >
+            Submit Feedback
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full mt-2 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"
+          >
+            Close
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 const CheckoutForm = ({ amount, onClose, campName }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -143,6 +220,7 @@ const RegisteredCamps = ({ participantId }) => {
   const [camps, setCamps] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCamp, setSelectedCamp] = useState(null);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const { user } = useContextt();
 
   useEffect(() => {
@@ -152,12 +230,17 @@ const RegisteredCamps = ({ participantId }) => {
   const fetchCamps = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/registeredParticipants/${user.email}`
+        `https://medi-camp-hub-sever.vercel.app/registeredParticipants/${user.email}`
       );
       setCamps(response.data);
     } catch (error) {
       console.error("Error fetching camps:", error);
     }
+  };
+
+  const openFeedbackModal = (camp) => {
+    setSelectedCamp(camp);
+    setIsFeedbackModalOpen(true);
   };
 
   const handleCancel = async (participantId, paymentStatus) => {
@@ -169,7 +252,7 @@ const RegisteredCamps = ({ participantId }) => {
     if (window.confirm("Are you sure you want to cancel this registration?")) {
       try {
         await axios.delete(
-          `http://localhost:3000/cancelRegistration/${participantId}`
+          `https://medi-camp-hub-sever.vercel.app/cancelRegistration/${participantId}`
         );
         alert("Registration canceled successfully!");
         fetchCamps();
@@ -185,7 +268,7 @@ const RegisteredCamps = ({ participantId }) => {
         Registered Camps
       </h1>
       <div className="overflow-x-auto">
-        <table className="table-auto w-full bg-white shadow-lg rounded-lg">
+        {/* <table className="table-auto w-full bg-white shadow-lg rounded-lg">
           <thead className="bg-pink-800 text-white">
             <tr>
               <th className="px-4 py-2">Camp Name</th>
@@ -226,6 +309,69 @@ const RegisteredCamps = ({ participantId }) => {
               </tr>
             ))}
           </tbody>
+        </table> */}
+        {/* Table */}
+        <table className="table-auto w-full bg-white shadow-lg rounded-lg">
+          <thead className="bg-pink-800 text-white">
+            <tr>
+              <th className="px-4 py-2">Camp Name</th>
+              <th className="px-4 py-2">Fees</th>
+              <th className="px-4 py-2">Participant Name</th>
+              <th className="px-4 py-2">Payment Status</th>
+              <th className="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {camps.map((camp) => (
+              <tr key={camp._id} className="border-b hover:bg-gray-50">
+                <td className="px-4 py-2">{camp.campName}</td>
+                <td className="px-4 py-2">${camp.campFees}</td>
+                <td className="px-4 py-2">{camp.participantName}</td>
+                <td className="px-4 py-2">
+                  <span
+                    className={`px-2 py-1 rounded-full ${
+                      camp.paymentStatus === "Paid"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                    }`}
+                  >
+                    {camp.paymentStatus || "Unpaid"}
+                  </span>
+                </td>
+                <td className="px-4 py-2 space-x-2">
+                  {camp.paymentStatus !== "Paid" && (
+                    <button
+                      className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
+                      onClick={() => {
+                        setSelectedCamp(camp);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      Pay
+                    </button>
+                  )}
+                  {camp.paymentStatus !== "Paid" && (
+                    <button
+                      className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+                      onClick={() =>
+                        handleCancel(camp.campId, camp.paymentStatus)
+                      }
+                    >
+                      Cancel
+                    </button>
+                  )}
+                  {camp.paymentStatus === "Paid" && (
+                    <button
+                      className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600"
+                      onClick={() => openFeedbackModal(camp)}
+                    >
+                      Feedback
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
 
@@ -245,6 +391,15 @@ const RegisteredCamps = ({ participantId }) => {
             </Elements>
           </div>
         </div>
+      )}
+
+      {/* Feedback Modal */}
+      {isFeedbackModalOpen && selectedCamp && (
+        <FeedbackModal
+          camp={selectedCamp}
+          onClose={() => setIsFeedbackModalOpen(false)}
+          onFeedbackSubmitted={fetchCamps}
+        />
       )}
     </div>
   );

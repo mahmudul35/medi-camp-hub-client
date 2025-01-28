@@ -10,7 +10,9 @@ const FeedbackSection = () => {
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/feedbacks");
+      const response = await axios.get(
+        "https://medi-camp-hub-sever.vercel.app/feedbacks"
+      );
       setFeedbacks(response.data);
     } catch (error) {}
   };

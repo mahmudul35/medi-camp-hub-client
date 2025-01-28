@@ -21,7 +21,7 @@ const Analytics = ({ participantId }) => {
   const fetchAnalyticsData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/registeredParticipants/${user?.email}`
+        `https://medi-camp-hub-sever.vercel.app/registeredParticipants/${user?.email}`
       );
       const transformedData = response.data.map((camp) => ({
         name: camp.campName,

@@ -11,10 +11,12 @@ const AvailableCamp = () => {
 
   useEffect(() => {
     // Fetch camps from the backend
-    axios.get("http://localhost:3000/availableCamps").then((response) => {
-      setCamps(response.data);
-      setFilteredCamps(response.data);
-    });
+    axios
+      .get("https://medi-camp-hub-sever.vercel.app/availableCamps")
+      .then((response) => {
+        setCamps(response.data);
+        setFilteredCamps(response.data);
+      });
   }, []);
 
   // Handle search

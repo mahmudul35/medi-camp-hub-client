@@ -18,7 +18,7 @@ const ParticipantProfile = ({ participantId }) => {
   const fetchParticipantProfile = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/users/${user?.email}`
+        `https://medi-camp-hub-sever.vercel.app/users/${user?.email}`
       );
       setParticipant(response.data);
       setFormData({
@@ -38,7 +38,10 @@ const ParticipantProfile = ({ participantId }) => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3000/users/${user?.email}`, formData);
+      await axios.put(
+        `https://medi-camp-hub-sever.vercel.app/users/${user?.email}`,
+        formData
+      );
       alert("Profile updated successfully!");
       setParticipant((prev) => ({ ...prev, ...formData }));
       setEditing(false);

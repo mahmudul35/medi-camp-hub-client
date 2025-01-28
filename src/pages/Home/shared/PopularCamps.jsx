@@ -8,7 +8,7 @@ const PopularCamps = () => {
   useEffect(() => {
     // Fetch popular camps from the backend
     axios
-      .get("http://localhost:3000/popularCamps")
+      .get("https://medi-camp-hub-sever.vercel.app/popularCamps")
       .then((response) => setCamps(response.data))
       .catch((error) => console.error(error));
   }, []);

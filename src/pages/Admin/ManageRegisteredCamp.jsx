@@ -11,7 +11,7 @@ const ManageRegisteredCamps = () => {
   const fetchParticipants = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/registeredParticipants"
+        "https://medi-camp-hub-sever.vercel.app/registeredParticipants"
       );
       setParticipants(response.data);
     } catch (error) {}
@@ -19,7 +19,9 @@ const ManageRegisteredCamps = () => {
 
   const handleConfirmPayment = async (participantId) => {
     try {
-      await axios.put(`http://localhost:3000/confirmPayment/${participantId}`);
+      await axios.put(
+        `https://medi-camp-hub-sever.vercel.app/confirmPayment/${participantId}`
+      );
       alert("Payment confirmed successfully!");
       fetchParticipants();
     } catch (error) {
@@ -40,7 +42,7 @@ const ManageRegisteredCamps = () => {
     if (window.confirm("Are you sure you want to cancel this registration?")) {
       try {
         await axios.delete(
-          `http://localhost:3000/cancelRegistration/${participantId}`
+          `https://medi-camp-hub-sever.vercel.app/cancelRegistration/${participantId}`
         );
         alert("Registration canceled successfully!");
         fetchParticipants();

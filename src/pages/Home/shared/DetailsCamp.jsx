@@ -20,7 +20,7 @@ const DetailsCamp = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/camp/${id}`)
+      .get(`https://medi-camp-hub-sever.vercel.app/camp/${id}`)
       .then((response) => {
         setCamp(response.data);
         setLoading(false);
@@ -47,7 +47,10 @@ const DetailsCamp = () => {
 
     // Save participant data and update participant count
     axios
-      .post("http://localhost:3000/registerParticipant", participantData)
+      .post(
+        "https://medi-camp-hub-sever.vercel.app/registerParticipant",
+        participantData
+      )
       .then((response) => {
         alert("Successfully registered for the camp!");
         setIsModalOpen(false);

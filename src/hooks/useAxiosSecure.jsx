@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useContextt from "../hooks/useContext";
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://medi-camp-hub-sever.vercel.app",
 });
 
 const useAxiosSecure = () => {

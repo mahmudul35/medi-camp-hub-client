@@ -13,7 +13,9 @@ const ManageCamps = () => {
 
   const fetchCamps = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/availableCamps");
+      const response = await axios.get(
+        "https://medi-camp-hub-sever.vercel.app/availableCamps"
+      );
       setCamps(response.data);
     } catch (error) {}
   };
@@ -21,7 +23,9 @@ const ManageCamps = () => {
   const handleDelete = async (campId) => {
     if (window.confirm("Are you sure you want to delete this camp?")) {
       try {
-        await axios.delete(`http://localhost:3000/delete-camp/${campId}`);
+        await axios.delete(
+          `https://medi-camp-hub-sever.vercel.app/delete-camp/${campId}`
+        );
         alert("Camp deleted successfully!");
         fetchCamps();
       } catch (error) {
@@ -38,7 +42,7 @@ const ManageCamps = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:3000/update-camp/${editingCamp._id}`,
+        `https://medi-camp-hub-sever.vercel.app/update-camp/${editingCamp._id}`,
         editingCamp
       );
       alert("Camp updated successfully!");

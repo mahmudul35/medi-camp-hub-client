@@ -32,7 +32,7 @@ const AddCamp = () => {
 
         // Send data to the backend
         const response = await axios.post(
-          "http://localhost:3000/admin/camps",
+          "https://medi-camp-hub-sever.vercel.app/admin/camps",
           campData
         );
 

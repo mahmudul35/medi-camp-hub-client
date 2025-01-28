@@ -29,7 +29,7 @@ export function Register() {
         displayName: name,
         photoURL: photo,
       }).then(() => {
-        axios.post("http://localhost:3000/addUser", {
+        axios.post("https://medi-camp-hub-sever.vercel.app/addUser", {
           name,
           email,
           photo,
