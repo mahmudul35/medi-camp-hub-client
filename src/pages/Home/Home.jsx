@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../component/common/Footer";
 import BannerSlider from "./shared/BannerSlider";
 import FeedbackSection from "./shared/FeedBack";
 import PopularCamps from "./shared/PopularCamps";
@@ -11,6 +12,7 @@ const Home = () => {
       <PopularCamps />
       <FeedbackSection />
       <VisionImpactSection />
+      <Footer />
     </div>
   );
 };
