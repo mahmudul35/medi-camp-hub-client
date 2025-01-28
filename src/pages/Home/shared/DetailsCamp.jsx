@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import useContextt from "../../../hooks/useContext";
-
 const DetailsCamp = () => {
   const { user } = useContextt();
   const { id } = useParams();
@@ -52,7 +52,14 @@ const DetailsCamp = () => {
         participantData
       )
       .then((response) => {
-        alert("Successfully registered for the camp!");
+        // alert("Successfully registered for the camp!");
+
+        Swal.fire({
+          icon: "success",
+          title: "Successfully registered for the camp!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         setIsModalOpen(false);
         setCamp((prevCamp) => ({
           ...prevCamp,

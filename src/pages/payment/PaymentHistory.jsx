@@ -36,6 +36,10 @@ const PaymentHistory = () => {
             </th>
             <th style={{ border: "1px solid #ddd", padding: "8px" }}>Fees</th>
             <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+              {" "}
+              Transaction ID{" "}
+            </th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>
               Payment Status
             </th>
             {/* <th style={{ border: "1px solid #ddd", padding: "8px" }}>
@@ -55,6 +59,9 @@ const PaymentHistory = () => {
               </td>
               <td style={{ border: "1px solid #ddd", padding: "8px" }}>
                 {payment.fees}
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                {payment.transactionId}
               </td>
               <td style={{ border: "1px solid #ddd", padding: "8px" }}>
                 {payment.paymentStatus}

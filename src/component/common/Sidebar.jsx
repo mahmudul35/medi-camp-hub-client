@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import logo from "../../assets/lago.png";
 import useAdminn from "../../hooks/useAdmin";
 // import logo from "../../assets/headerImg.png";
 
@@ -100,7 +101,10 @@ export default function Sidebar() {
                 : "transition-all duration-300 ease-in-out hidden"
             } w-32`}
           />
-          <Link to="/">MedicampHub</Link>
+          <Link to="/">
+            {" "}
+            <img src={logo} className="w-12 h-12" alt="" />{" "}
+          </Link>
         </div>
         <nav className="mt-8 flex-grow">
           {isAdmin ? (
