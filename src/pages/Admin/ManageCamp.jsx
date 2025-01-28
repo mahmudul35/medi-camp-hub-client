@@ -15,9 +15,7 @@ const ManageCamps = () => {
     try {
       const response = await axios.get("http://localhost:3000/availableCamps");
       setCamps(response.data);
-    } catch (error) {
-      console.error("Failed to fetch camps", error);
-    }
+    } catch (error) {}
   };
 
   const handleDelete = async (campId) => {
@@ -27,7 +25,6 @@ const ManageCamps = () => {
         alert("Camp deleted successfully!");
         fetchCamps();
       } catch (error) {
-        console.error("Failed to delete camp", error);
         alert("Error deleting camp.");
       }
     }
@@ -48,7 +45,6 @@ const ManageCamps = () => {
       setEditingCamp(null);
       fetchCamps();
     } catch (error) {
-      console.error("Failed to update camp", error);
       alert("Error updating camp.");
     }
   };

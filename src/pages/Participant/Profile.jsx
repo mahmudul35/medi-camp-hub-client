@@ -26,9 +26,7 @@ const ParticipantProfile = ({ participantId }) => {
         image: response.data.image || "",
         contact: response.data.contact || "",
       });
-    } catch (error) {
-      console.error("Error fetching participant profile:", error);
-    }
+    } catch (error) {}
   };
 
   const handleInputChange = (e) => {
@@ -45,7 +43,6 @@ const ParticipantProfile = ({ participantId }) => {
       setParticipant((prev) => ({ ...prev, ...formData }));
       setEditing(false);
     } catch (error) {
-      console.error("Error updating profile:", error);
       alert("Failed to update profile.");
     }
   };

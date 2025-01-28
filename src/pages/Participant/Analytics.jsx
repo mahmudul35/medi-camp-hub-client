@@ -28,9 +28,7 @@ const Analytics = ({ participantId }) => {
         fees: camp.campFees,
       }));
       setAnalyticsData(transformedData);
-    } catch (error) {
-      console.error("Error fetching analytics data:", error);
-    }
+    } catch (error) {}
   };
 
   return (

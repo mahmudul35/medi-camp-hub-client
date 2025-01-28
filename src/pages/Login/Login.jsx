@@ -21,7 +21,7 @@ export function CryptoLogin() {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+
     signIn(email, password).then((res) => {
       alert("Login Successful");
     });
@@ -35,7 +35,6 @@ export function CryptoLogin() {
         photoURL: res.user.photoURL,
       };
       axiosPublic.post("/addUser", userInfo).then((res) => {
-        console.log(res);
         navigate("/");
       });
     });

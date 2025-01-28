@@ -26,7 +26,6 @@ const DetailsCamp = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error(error);
         setLoading(false);
       });
   }, [id]);
@@ -58,7 +57,6 @@ const DetailsCamp = () => {
         }));
       })
       .catch((error) => {
-        console.error(error);
         alert("Failed to register for the camp. Please try again.");
       });
   };

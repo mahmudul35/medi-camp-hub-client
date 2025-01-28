@@ -44,7 +44,7 @@ const AddCamp = () => {
         throw new Error("Failed to upload image");
       }
     } catch (error) {
-      console.error("Failed to add camp", error);
+      // console.error("Failed to add camp", error);
       alert("Error adding camp. Please try again.");
     }
   };

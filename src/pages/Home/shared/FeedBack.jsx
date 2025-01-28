@@ -12,9 +12,7 @@ const FeedbackSection = () => {
     try {
       const response = await axios.get("http://localhost:3000/feedbacks");
       setFeedbacks(response.data);
-    } catch (error) {
-      console.error("Failed to fetch feedbacks", error);
-    }
+    } catch (error) {}
   };
 
   const renderStars = (rating) => {

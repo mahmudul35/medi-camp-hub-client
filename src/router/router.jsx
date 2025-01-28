@@ -6,6 +6,7 @@ import ManageCamps from "../pages/Admin/ManageCamp";
 import ManageRegisteredCamps from "../pages/Admin/ManageRegisteredCamp";
 import ManageUsers from "../pages/Admin/ManageUsers";
 import AvailableCamp from "../pages/AvailableCamps/AvailableCamp";
+import { ErrorPage } from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import DetailsCamp from "../pages/Home/shared/DetailsCamp";
 import CryptoLogin from "../pages/Login/Login";
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -66,28 +68,28 @@ const router = createBrowserRouter([
       {
         path: "manageCamp",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             {" "}
             <ManageCamps />{" "}
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "manageRegistered",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             {" "}
             <ManageRegisteredCamps />
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "manageUser",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             {" "}
             <ManageUsers />
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {

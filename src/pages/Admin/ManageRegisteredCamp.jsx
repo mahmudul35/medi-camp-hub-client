@@ -14,9 +14,7 @@ const ManageRegisteredCamps = () => {
         "http://localhost:3000/registeredParticipants"
       );
       setParticipants(response.data);
-    } catch (error) {
-      console.error("Error fetching participants:", error);
-    }
+    } catch (error) {}
   };
 
   const handleConfirmPayment = async (participantId) => {
@@ -25,7 +23,6 @@ const ManageRegisteredCamps = () => {
       alert("Payment confirmed successfully!");
       fetchParticipants();
     } catch (error) {
-      console.error("Error confirming payment:", error);
       alert("Failed to confirm payment.");
     }
   };
@@ -48,7 +45,6 @@ const ManageRegisteredCamps = () => {
         alert("Registration canceled successfully!");
         fetchParticipants();
       } catch (error) {
-        console.error("Error canceling registration:", error);
         alert("Failed to cancel registration.");
       }
     }

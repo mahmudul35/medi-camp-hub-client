@@ -31,7 +31,7 @@ const CheckoutForm = ({ amount, onClose, campName }) => {
       const response = await axiosSecure.post("/create-payment-intent", {
         amount,
       });
-      console.log(response.data.clientSecret);
+
       setClientSecret(response.data.clientSecret);
     };
     fetchClientSecret();
@@ -81,7 +81,7 @@ const CheckoutForm = ({ amount, onClose, campName }) => {
       }
       if (paymentIntent.status === "succeeded") {
         setSuccess(true);
-        // console.log(paymentIntent.id);
+
         setTransactionId(paymentIntent.id);
 
         const paymentInfo = {
@@ -94,7 +94,6 @@ const CheckoutForm = ({ amount, onClose, campName }) => {
         };
 
         const res = await axiosSecure.post("/payment", paymentInfo);
-        console.log(res);
       } else {
         setError("Payment failed");
       }
@@ -175,7 +174,6 @@ const RegisteredCamps = ({ participantId }) => {
         alert("Registration canceled successfully!");
         fetchCamps();
       } catch (error) {
-        console.error("Error canceling registration:", error);
         alert("Failed to cancel registration.");
       }
     }

@@ -13,16 +13,12 @@ const ManageUsers = () => {
     },
   });
 
-  const handleEdit = (user) => {
-    console.log("Edit user", user);
-  };
+  const handleEdit = (user) => {};
   const handleDelete = (user) => {
     axiosSecure.delete(`/users/${user._id}`).then((res) => {
       refetch();
       alert(res.data.message);
     });
-
-    console.log("Delete user", user);
   };
 
   const handleMakeAdmin = (user) => {

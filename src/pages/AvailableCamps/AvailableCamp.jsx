@@ -11,13 +11,10 @@ const AvailableCamp = () => {
 
   useEffect(() => {
     // Fetch camps from the backend
-    axios
-      .get("http://localhost:3000/availableCamps")
-      .then((response) => {
-        setCamps(response.data);
-        setFilteredCamps(response.data);
-      })
-      .catch((error) => console.error(error));
+    axios.get("http://localhost:3000/availableCamps").then((response) => {
+      setCamps(response.data);
+      setFilteredCamps(response.data);
+    });
   }, []);
 
   // Handle search
