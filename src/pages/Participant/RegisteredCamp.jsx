@@ -180,7 +180,7 @@ const CheckoutForm = ({ amount, onClose, campName }) => {
         };
 
         const res = await axiosSecure.post("/payment", paymentInfo);
-        navigate("paymentHistory");
+        // navigate("paymentHistory");
       } else {
         setError("Payment failed");
       }
