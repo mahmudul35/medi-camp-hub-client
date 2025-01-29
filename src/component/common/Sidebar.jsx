@@ -76,7 +76,7 @@ export default function Sidebar() {
   return (
     <motion.div
       className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
-        isSidebarOpen ? "w-64" : "w-20"
+        isSidebarOpen ? " md:w-64 " : "w-20"
       }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
@@ -123,7 +123,10 @@ export default function Sidebar() {
                           exit={{ opacity: 0, width: 0 }}
                           transition={{ duration: 0.2, delay: 0.3 }}
                         >
-                          <h1 className="text-black"> {item.name}</h1>
+                          <h1 className="hidden md:text-black md:block">
+                            {" "}
+                            {item.name}
+                          </h1>
                         </motion.span>
                       )}
                     </AnimatePresence>

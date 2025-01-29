@@ -56,7 +56,7 @@ const AddCamp = () => {
   };
 
   return (
-    <div className="container mx-auto py-12 px-6">
+    <div className="container mx-auto py-12 px-6 overflow-x-auto">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
         Add A Camp
       </h1>
