@@ -84,6 +84,7 @@ const DetailsCamp = () => {
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
         Camp Details
       </h1>
+      {/* {JSON.stringify(camp)} */}
       {camp ? (
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="flex items-center justify-center">
@@ -110,6 +111,10 @@ const DetailsCamp = () => {
             <p className="text-gray-700 mb-2">
               <span className="font-semibold">Fees:</span>{" "}
               <span className="text-pink-800 font-bold">${camp.fees}</span>
+            </p>
+            <p className="text-gray-700 mb-2">
+              <span className="font-semibold">Healthcare Professional:</span>{" "}
+              {camp.healthcareProfessional}
             </p>
             <p className="text-gray-700 mb-2">
               <span className="font-semibold">Participants:</span>{" "}

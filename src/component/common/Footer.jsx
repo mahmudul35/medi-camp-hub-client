@@ -31,7 +31,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="/available-camps"
+                href="/availableCamp"
                 className="hover:text-pink-600 transition-colors duration-300"
               >
                 Available Camps
@@ -39,7 +39,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="/about-us"
+                href="/"
                 className="hover:text-pink-600 transition-colors duration-300"
               >
                 About Us
@@ -47,7 +47,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="/contact"
+                href="/"
                 className="hover:text-pink-600 transition-colors duration-300"
               >
                 Contact Us

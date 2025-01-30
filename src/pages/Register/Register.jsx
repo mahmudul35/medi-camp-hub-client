@@ -14,7 +14,7 @@ import useContextt from "../../hooks/useContext";
 // @icons
 
 export function Register() {
-  const { user, signUp, updateUserProfile } = useContextt();
+  const { user, signUp, updateUserProfile, signInWithGoogle } = useContextt();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -35,6 +35,26 @@ export function Register() {
           photo,
         });
 
+        navigate("/");
+      });
+    });
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle().then((res) => {
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/");
+      const userInfo = {
+        email: res.user.email,
+        name: res.user.displayName,
+        photoURL: res.user.photoURL,
+      };
+      axiosPublic.post("/addUser", userInfo).then((res) => {
         navigate("/");
       });
     });
@@ -172,6 +192,22 @@ export function Register() {
               className="bg-primary-color hover:text-white"
             >
               Register
+            </Button>
+
+            <Button
+              variant="outlined"
+              size="lg"
+              className="flex h-12 border-blue-gray-200 items-center justify-center gap-2"
+              fullWidth
+              type="button"
+              onClick={handleGoogleSignIn}
+            >
+              <img
+                src={`https://www.material-tailwind.com/logos/logo-google.png`}
+                alt="google"
+                className="h-6 w-6"
+              />{" "}
+              sign in with google
             </Button>
           </form>
         </CardBody>

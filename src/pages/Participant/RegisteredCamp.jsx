@@ -18,7 +18,7 @@ const stripePromise = loadStripe(
 const FeedbackModal = ({ camp, onClose, onFeedbackSubmitted }) => {
   const [feedbackText, setFeedback] = useState("");
   const [rating, setRating] = useState("");
-  console.log(camp);
+  // console.log(camp);
   const handleFeedbackSubmit = async (event) => {
     event.preventDefault();
 
@@ -26,8 +26,10 @@ const FeedbackModal = ({ camp, onClose, onFeedbackSubmitted }) => {
       campId: camp._id,
       campName: camp.campName,
       participantEmail: camp.participantEmail,
+      participantName: camp.participantName,
       feedbackText,
       rating,
+      date: new Date().toLocaleDateString(),
       // date: new Date(),
     };
 
@@ -36,12 +38,18 @@ const FeedbackModal = ({ camp, onClose, onFeedbackSubmitted }) => {
         "https://medi-camp-hub-sever.vercel.app/submitFeedback",
         feedbackData
       );
-      alert("Feedback submitted successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Feedback Submitted",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // alert("Feedback submitted successfully!");
       onFeedbackSubmitted();
       onClose();
     } catch (error) {
       alert("Failed to submit feedback.");
-      console.error("Error submitting feedback:", error);
+      // console.error("Error submitting feedback:", error);
     }
   };
 
@@ -180,7 +188,7 @@ const CheckoutForm = ({ amount, onClose, campName }) => {
         };
 
         const res = await axiosSecure.post("/payment", paymentInfo);
-        // navigate("paymentHistory");
+        navigate("/dashboard/paymentHistory");
       } else {
         setError("Payment failed");
       }
@@ -231,7 +239,10 @@ const RegisteredCamps = ({ participantId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCamp, setSelectedCamp] = useState(null);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // Search state
   const { user } = useContextt();
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
 
   useEffect(() => {
     fetchCamps();
@@ -310,11 +321,41 @@ const RegisteredCamps = ({ participantId }) => {
     });
   };
 
+  // Search function to filter camps
+  const filteredCamps = camps.filter((camp) =>
+    `${camp.campName} ${camp.dateTime} ${camp.healthcareProfessional}`
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredCamps.length / rowsPerPage);
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentCamps = filteredCamps.slice(indexOfFirstRow, indexOfLastRow);
+
   return (
     <div className="container mx-auto py-12 px-6">
       <h1 className="text-4xl font-bold text-center text-pink-800 mb-12">
         Registered Camps
       </h1>
+      {/* 🔍 Search Bar */}
+      <div className="mb-6 flex justify-center items-center space-x-2">
+        <input
+          type="text"
+          placeholder="Search by Camp Name, Date, or Healthcare Professional"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full max-w-md px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-800"
+        />
+        <button
+          onClick={() => setSearchQuery("")}
+          className="bg-pink-800 text-white px-4 py-2 rounded-md hover:bg-pink-700 transition"
+        >
+          {" "}
+          Clear{" "}
+        </button>
+      </div>
       <div className="overflow-x-auto">
         {/* <table className="table-auto w-full bg-white shadow-lg rounded-lg">
           <thead className="bg-pink-800 text-white">
@@ -425,6 +466,29 @@ const RegisteredCamps = ({ participantId }) => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* 📌 Pagination */}
+      <div className="flex justify-center items-center mt-6 space-x-2">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="px-4 py-2 text-gray-700">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
 
       {/* Payment Modal */}

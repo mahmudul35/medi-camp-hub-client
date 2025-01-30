@@ -1,9 +1,13 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=4276e99e16c8c70522c44d4e9b5eb595`;
+
 const AddCamp = () => {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -12,24 +16,21 @@ const AddCamp = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      // Include participantCount as 0
-      const campData = { ...data, participantCount: 0 };
+      const campData = { ...data, participantCount: 0 }; // Ensure it starts at 0
 
       // Prepare the image for upload
       const formData = new FormData();
-      formData.append("image", campData.image[0]); // Append the actual file
+      formData.append("image", campData.image[0]);
 
       // Upload image to imgbb
       const imageRes = await axios.post(imageHostingApi, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
-      if (imageRes.data && imageRes.data.data && imageRes.data.data.url) {
-        // Add the uploaded image URL to the camp data
-        campData.image = imageRes.data.data.url;
+      if (imageRes.data?.data?.url) {
+        campData.image = imageRes.data.data.url; // Add image URL to camp data
 
         // Send data to the backend
         const response = await axios.post(
@@ -44,171 +45,163 @@ const AddCamp = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          reset(); // Reset the form
+          reset(); // Reset form after success
         }
       } else {
-        throw new Error("Failed to upload image");
+        throw new Error("Image upload failed");
       }
     } catch (error) {
-      // console.error("Failed to add camp", error);
-      alert("Error adding camp. Please try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Error Adding Camp",
+        text: "Something went wrong. Please try again.",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto py-12 px-6 overflow-x-auto">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        Add A Camp
+    <div className="max-w-4xl mx-auto py-12 px-6">
+      <h1 className="text-4xl font-bold text-center text-pink-800 mb-8">
+        Add A New Camp
       </h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-8"
+        className="bg-white shadow-xl rounded-lg p-8"
       >
         {/* Camp Name */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
-            Camp Name
-          </label>
+          <label className="block font-semibold text-gray-700">Camp Name</label>
           <input
             type="text"
             {...register("name", { required: "Camp Name is required" })}
-            className={`w-full border ${
-              errors.name ? "border-red-500" : "border-gray-300"
-            } rounded-lg p-2`}
+            className="w-full border rounded-lg p-2"
             placeholder="Enter camp name"
           />
           {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            <p className="text-red-500 text-sm">{errors.name.message}</p>
           )}
         </div>
 
-        {/* Image */}
+        {/* Image Upload */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
-            Image URL
+          <label className="block font-semibold text-gray-700">
+            Upload Image
           </label>
           <input
             type="file"
-            {...register("image", { required: "Image URL is required" })}
-            className={`w-full border ${
-              errors.image ? "border-red-500" : "border-gray-300"
-            } rounded-lg p-2`}
-            placeholder="Enter image URL"
+            {...register("image", { required: "Image is required" })}
+            className="w-full border rounded-lg p-2"
           />
           {errors.image && (
-            <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
+            <p className="text-red-500 text-sm">{errors.image.message}</p>
           )}
         </div>
 
         {/* Camp Fees */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block font-semibold text-gray-700">
             Camp Fees ($)
           </label>
           <input
             type="number"
             {...register("fees", { required: "Camp Fees is required" })}
-            className={`w-full border ${
-              errors.fees ? "border-red-500" : "border-gray-300"
-            } rounded-lg p-2`}
+            className="w-full border rounded-lg p-2"
             placeholder="Enter camp fees"
           />
           {errors.fees && (
-            <p className="text-red-500 text-sm mt-1">{errors.fees.message}</p>
+            <p className="text-red-500 text-sm">{errors.fees.message}</p>
           )}
         </div>
 
         {/* Date & Time */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block font-semibold text-gray-700">
             Date & Time
           </label>
           <input
             type="datetime-local"
             {...register("dateTime", { required: "Date & Time is required" })}
-            className={`w-full border ${
-              errors.dateTime ? "border-red-500" : "border-gray-300"
-            } rounded-lg p-2`}
+            className="w-full border rounded-lg p-2"
           />
           {errors.dateTime && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.dateTime.message}
-            </p>
+            <p className="text-red-500 text-sm">{errors.dateTime.message}</p>
           )}
         </div>
 
         {/* Location */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
-            Location
-          </label>
+          <label className="block font-semibold text-gray-700">Location</label>
           <input
             type="text"
             {...register("location", { required: "Location is required" })}
-            className={`w-full border ${
-              errors.location ? "border-red-500" : "border-gray-300"
-            } rounded-lg p-2`}
+            className="w-full border rounded-lg p-2"
             placeholder="Enter location"
           />
           {errors.location && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.location.message}
-            </p>
+            <p className="text-red-500 text-sm">{errors.location.message}</p>
           )}
         </div>
 
         {/* Healthcare Professional */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
-            Healthcare Professional
+          <label className="block font-semibold text-gray-700">
+            Healthcare Professional Name
           </label>
           <input
             type="text"
             {...register("healthcareProfessional", {
-              required: "Healthcare Professional is required",
+              required: "Healthcare Professional Name is required",
             })}
-            className={`w-full border ${
-              errors.healthcareProfessional
-                ? "border-red-500"
-                : "border-gray-300"
-            } rounded-lg p-2`}
+            className="w-full border rounded-lg p-2"
             placeholder="Enter professional's name"
           />
           {errors.healthcareProfessional && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-red-500 text-sm">
               {errors.healthcareProfessional.message}
             </p>
           )}
         </div>
 
+        {/* Participant Count (Fixed at 0) */}
+        <div className="mb-4">
+          <label className="block font-semibold text-gray-700">
+            Participant Count (Starts at 0)
+          </label>
+          <input
+            type="number"
+            value={0}
+            disabled
+            className="w-full border rounded-lg p-2 bg-gray-100 cursor-not-allowed"
+          />
+        </div>
+
         {/* Description */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block font-semibold text-gray-700">
             Description
           </label>
           <textarea
             {...register("description", {
               required: "Description is required",
             })}
-            className={`w-full border ${
-              errors.description ? "border-red-500" : "border-gray-300"
-            } rounded-lg p-2`}
+            className="w-full border rounded-lg p-2"
             placeholder="Enter description"
-            rows="4"
+            rows="3"
           ></textarea>
           {errors.description && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.description.message}
-            </p>
+            <p className="text-red-500 text-sm">{errors.description.message}</p>
           )}
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-pink-800 text-white py-3 px-6 rounded-lg hover:bg-pink-700 transition duration-300"
         >
-          Add Camp
+          {loading ? "Adding Camp..." : "Add Camp"}
         </button>
       </form>
     </div>

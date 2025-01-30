@@ -6,7 +6,7 @@ const ManageCamps = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(10); // Rows per page is fixed at 10
   const [editingCamp, setEditingCamp] = useState(null);
-
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     fetchCamps();
   }, []);
@@ -81,6 +81,15 @@ const ManageCamps = () => {
     }
   };
 
+  const filteredCamps = camps.filter(
+    (camp) =>
+      camp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      camp.dateTime.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      camp.healthcareProfessional
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+  );
+
   // Calculate the data for the current page
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -96,6 +105,23 @@ const ManageCamps = () => {
       <h1 className="text-4xl font-bold text-center text-pink-800 mb-12">
         Manage Camps
       </h1>
+
+      <div className="mb-6 flex justify-center items-center space-x-2">
+        <input
+          type="text"
+          placeholder="Search by Camp Name, Date, or Healthcare Professional"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full max-w-md px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-800"
+        />
+        <button
+          onClick={() => setSearchQuery("")}
+          className="bg-pink-800 text-white px-4 py-2 rounded-md hover:bg-pink-700 transition"
+        >
+          Clear
+        </button>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden">
           <thead className="bg-pink-800 text-white">
@@ -121,7 +147,7 @@ const ManageCamps = () => {
                     onClick={() => handleEdit(camp)}
                     className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
                   >
-                    Edit
+                    Update
                   </button>
                   <button
                     onClick={() => handleDelete(camp._id)}
